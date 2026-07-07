@@ -24,9 +24,9 @@ module tb_top();
 
     // 4. MUST HAVE: Command Icarus to record the waveform for GTKWave
     initial begin
-        $dumpfile("waveform.vcd"); 
-        $dumpvars(0, tb_top);      
-    end
+    $dumpfile("waveform.fst");
+    $dumpvars(0, tb_top);
+end
 
     // 5. The Virtual Robot Pressing the Buttons
     initial begin
