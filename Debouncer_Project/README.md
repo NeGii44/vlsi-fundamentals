@@ -112,4 +112,4 @@ Flashed to the Tang Nano 20K through Gowin IDE, s2 being pressed:
 - maybe swap LEDs for a 7-seg or small OLED display, more useful output
 
 ---
-part of my [vlsi-fundamentals](https://github.com/NeGii44/vlsi-fundamentals) repo, learning Verilog/FPGA stuff alongside GATE 2027 prep
+part of my [vlsi-fundamentals](https://github.com/NeGii44/vlsi-fundamentals) repo, learning Verilog/FPGA stuff 
