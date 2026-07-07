@@ -1,0 +1,162 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1110-g18392a46)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_0000021f91dc5aa0 .scope module, "tb_top" "tb_top" 2 3;
+ .timescale -9 -12;
+v0000021f91dd3890_0 .var "fake_s1", 0 0;
+v0000021f91dd2e90_0 .var "fake_s2", 0 0;
+v0000021f91dd32f0_0 .var "fake_sys_clk", 0 0;
+v0000021f91dd2c10_0 .net "observe_led", 3 0, L_0000021f91dd8400;  1 drivers
+S_0000021f91dc5c30 .scope module, "uut" "top" 2 12, 3 1 0, S_0000021f91dc5aa0;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 1 "sys_clk";
+    .port_info 1 /INPUT 1 "s1";
+    .port_info 2 /INPUT 1 "s2";
+    .port_info 3 /OUTPUT 4 "led";
+L_0000021f91dd85c0 .functor NOT 1, v0000021f91dd3890_0, C4<0>, C4<0>, C4<0>;
+L_0000021f91dd8320 .functor NOT 1, v0000021f91dd2e90_0, C4<0>, C4<0>, C4<0>;
+L_0000021f91dd8400 .functor NOT 4, v0000021f91dda250_0, C4<0000>, C4<0000>, C4<0000>;
+v0000021f91dda2f0_0 .net "clean_clk", 0 0, v0000021f91ddd680_0;  1 drivers
+v0000021f91dda390_0 .net "in_wi", 3 0, v0000021f91dda250_0;  1 drivers
+v0000021f91dd2df0_0 .net "led", 3 0, L_0000021f91dd8400;  alias, 1 drivers
+v0000021f91dd2b70_0 .net "raw_clk", 0 0, L_0000021f91dd8320;  1 drivers
+v0000021f91dd37f0_0 .net "s1", 0 0, v0000021f91dd3890_0;  1 drivers
+v0000021f91dd36b0_0 .net "s2", 0 0, v0000021f91dd2e90_0;  1 drivers
+v0000021f91dd2ad0_0 .net "se_in", 0 0, L_0000021f91dd85c0;  1 drivers
+v0000021f91dd3110_0 .net "sys_clk", 0 0, v0000021f91dd32f0_0;  1 drivers
+S_0000021f91dd77e0 .scope module, "my_filter" "debouncer" 3 14, 4 2 0, S_0000021f91dc5c30;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "btn_in";
+    .port_info 2 /OUTPUT 1 "btn_out";
+v0000021f91dd7970_0 .net "btn_in", 0 0, L_0000021f91dd8320;  alias, 1 drivers
+v0000021f91ddd680_0 .var "btn_out", 0 0;
+v0000021f91dd7a10_0 .net "clk", 0 0, v0000021f91dd32f0_0;  alias, 1 drivers
+v0000021f91dd7ab0_0 .var "timer", 19 0;
+E_0000021f91ddf3e0 .event posedge, v0000021f91dd7a10_0;
+S_0000021f91dda0c0 .scope module, "my_mem" "dff" 3 19, 5 1 0, S_0000021f91dc5c30;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 1 "d";
+    .port_info 1 /INPUT 1 "clk";
+    .port_info 2 /OUTPUT 4 "q";
+v0000021f91dd7b50_0 .net "clk", 0 0, v0000021f91ddd680_0;  alias, 1 drivers
+v0000021f91dd7bf0_0 .net "d", 0 0, L_0000021f91dd85c0;  alias, 1 drivers
+v0000021f91dda250_0 .var "q", 3 0;
+E_0000021f91ddf8e0 .event posedge, v0000021f91ddd680_0;
+    .scope S_0000021f91dd77e0;
+T_0 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021f91ddd680_0, 0, 1;
+    %pushi/vec4 0, 0, 20;
+    %store/vec4 v0000021f91dd7ab0_0, 0, 20;
+    %end;
+    .thread T_0;
+    .scope S_0000021f91dd77e0;
+T_1 ;
+    %wait E_0000021f91ddf3e0;
+    %load/vec4 v0000021f91dd7970_0;
+    %load/vec4 v0000021f91ddd680_0;
+    %cmp/ne;
+    %jmp/0xz  T_1.0, 4;
+    %load/vec4 v0000021f91dd7ab0_0;
+    %addi 1, 0, 20;
+    %assign/vec4 v0000021f91dd7ab0_0, 0;
+    %load/vec4 v0000021f91dd7ab0_0;
+    %cmpi/u 540000, 0, 20;
+    %flag_inv 5; GE is !LT
+    %jmp/0xz  T_1.2, 5;
+    %load/vec4 v0000021f91dd7970_0;
+    %assign/vec4 v0000021f91ddd680_0, 0;
+    %pushi/vec4 0, 0, 20;
+    %assign/vec4 v0000021f91dd7ab0_0, 0;
+T_1.2 ;
+    %jmp T_1.1;
+T_1.0 ;
+    %pushi/vec4 0, 0, 20;
+    %assign/vec4 v0000021f91dd7ab0_0, 0;
+T_1.1 ;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0000021f91dda0c0;
+T_2 ;
+    %pushi/vec4 0, 0, 4;
+    %store/vec4 v0000021f91dda250_0, 0, 4;
+    %end;
+    .thread T_2;
+    .scope S_0000021f91dda0c0;
+T_3 ;
+    %wait E_0000021f91ddf8e0;
+    %load/vec4 v0000021f91dda250_0;
+    %parti/s 3, 0, 2;
+    %load/vec4 v0000021f91dd7bf0_0;
+    %concat/vec4; draw_concat_vec4
+    %assign/vec4 v0000021f91dda250_0, 0;
+    %jmp T_3;
+    .thread T_3;
+    .scope S_0000021f91dc5aa0;
+T_4 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021f91dd32f0_0, 0, 1;
+T_4.0 ;
+    %delay 18500, 0;
+    %load/vec4 v0000021f91dd32f0_0;
+    %inv;
+    %store/vec4 v0000021f91dd32f0_0, 0, 1;
+    %jmp T_4.0;
+    %end;
+    .thread T_4;
+    .scope S_0000021f91dc5aa0;
+T_5 ;
+    %vpi_call 2 27 "$dumpfile", "waveform.vcd" {0 0 0};
+    %vpi_call 2 28 "$dumpvars", 32'sb00000000000000000000000000000000, S_0000021f91dc5aa0 {0 0 0};
+    %end;
+    .thread T_5;
+    .scope S_0000021f91dc5aa0;
+T_6 ;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021f91dd3890_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021f91dd2e90_0, 0, 1;
+    %delay 100000000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021f91dd3890_0, 0, 1;
+    %delay 50000000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021f91dd2e90_0, 0, 1;
+    %delay 1000000, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021f91dd2e90_0, 0, 1;
+    %delay 2000000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021f91dd2e90_0, 0, 1;
+    %delay 1500000, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021f91dd2e90_0, 0, 1;
+    %delay 1000000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000021f91dd2e90_0, 0, 1;
+    %delay 3525163520, 5;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021f91dd2e90_0, 0, 1;
+    %delay 3525163520, 5;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000021f91dd3890_0, 0, 1;
+    %delay 100000000, 0;
+    %vpi_call 2 60 "$display", "Virtual Validation Complete!" {0 0 0};
+    %vpi_call 2 61 "$finish" {0 0 0};
+    %end;
+    .thread T_6;
+# The file index is used to find the file name in the following table.
+:file_names 6;
+    "N/A";
+    "<interactive>";
+    "tb_top.v";
+    "top.v";
+    "debouncer.v";
+    "dff.v";
